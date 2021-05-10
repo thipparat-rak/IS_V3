@@ -1,0 +1,78 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Import related party transaction (RPT) file</h5>
+{% endblock %}
+
+
+{% block content %}
+  <body>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+            {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %} 
+    <br>
+    <form method="post" enctype="multipart/form-data">
+      <div class="input-group-append">
+        {% csrf_token %}
+        <!-- {{ form }} -->
+        {{ form.RPTforms.label }}
+        {{ form.RPTforms }}
+        <button type="submit" class="btn btn-primary btn-sm">Upload</button>
+      </div>
+    </form>
+  </body>
+  
+
+  <!--ตาราง-->
+  <body>
+  <br>
+  <div id="table" class="table table-sm table-editable ">
+    <span class="table-add float-right mb-3 mr-2"></span>
+    <table class="table table-bordered table-responsive-md  text-center">
+      <thead class="table-info">
+        <tr>
+          <th class="text-center">Company Code</th>
+          <th class="text-center">Period Code</th>
+          <th class="text-center">RPT date create</th>
+          <th class="text-center">RPT file name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in RPTfileSummary %}
+        <tr>
+          <td>{{ a.company_code }} </td>
+          <td>{{ a.period_code }} </td>
+          <td>{{ a.date_create|date:'j M Y H:i' }}</td>
+          <td>{{ a.rpt_file_name }}</td>
+          <td>
+            <a href="javascript:del('{% url 'RPTDelete' id=a.rpt_file_name %}')" class="btn btn-danger btn-sm"> Delete</a>
+            <script>
+                function del(url) {
+                    if (confirm('Are you sure you want to delete your RPT file?')) {
+                        document.location = url;
+                    }
+                }
+            </script>
+          </td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+  
+  <!-- <script>
+    setTimeout(function(){
+      if ($('#msg').length > 0) {
+        $('#msg').remove();
+      }
+    }, 5000)
+  </script>  -->
+  
+  </body>
+  {% endblock %}

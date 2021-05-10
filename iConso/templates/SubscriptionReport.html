@@ -1,0 +1,88 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Subscription Report</h5>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %} 
+    <style>
+        td {
+        border: 1px solid #bbb;
+        padding: 2px 8px 0;
+        font-size: 14px;
+        text-align: center;
+        }
+        thead > tr > th {
+        background-color: #b9e4e6;
+        font-size: 14px;
+        border-bottom: 2px solid #999;
+        }
+        /* style ของ row */
+        tbody>tr>:nth-child(2){text-align:left;}
+        tbody>tr>:nth-child(5){text-align:right;}
+        /* tbody>tr>:last-child{text-align:right;} */
+    </style>
+    <script>
+        $(function () {
+            $("#exporttable").click(function (e) {
+                var table = $("#Consotable");
+                if (table && table.length) {
+                    $(table).table2excel({
+                        exclude: ".noExl",
+                        name: "Excel Document Name",
+                        filename: "SubscriptionReport_" + new Date().toISOString().replace(/[\-\:\.]/g, "") + ".xls",
+                        fileext: ".xls",
+                        exclude_img: true,
+                        exclude_links: true,
+                        exclude_inputs: true,
+                        preserveColors: true
+                    });
+                }
+            });
+        });
+    </script>
+
+<form method="post" class="m-auto" >
+    {% csrf_token %}
+    <div class="container ">
+        <div class="form-row center">
+
+            <div class="form-group col-md-3 ">
+              {{ form.CompanyCodeFilter|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-3 ">
+              {{ form.CompanyNameFilter|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-3 ">
+              {{ form.PlanCodeFilter|as_crispy_field }}
+            </div>
+            <div class= "form-group  col-md-2 m-auto">
+            <button class= "btn btn-info">Run data</button>
+            <button id= "exporttable" class="btn btn-info">Export</button>
+            </div>
+        </div> 
+    </div>
+</form>
+
+<form method="post" class="m-auto" >
+    {% csrf_token %}
+    <div class="container">
+        <div id="Consotable" class="table table-sm">
+            <div class="col-md-12 "> 
+                {{ final_result|safe  }}
+            </div>
+        </div>          
+    </div>  
+</form>
+   
+
+
+{% endblock %}

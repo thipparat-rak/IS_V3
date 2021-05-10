@@ -1,0 +1,90 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<head>
+  <div class="card bg-light mb-3">
+    <div class="card-body">
+      <div class="container">
+        <h3>Import Trial Balance file</h3>
+
+        Current Period : &nbsp;&nbsp;
+        Q4_2020 &nbsp;&nbsp;
+        
+          <class="col-sm"> &nbsp;&nbsp; Start Date : 01-Jan-2020 &nbsp;&nbsp;
+            <class="col-sm"> &nbsp;&nbsp; End Date : 31-Dec-2020
+      </div>
+    </div>
+  </div>
+</head>
+<body>
+      {% for message in messages %}
+        <li>
+        {{message}}
+        </li>
+      {% endfor %}
+      {% for error_field, error_message in form.errors.items %}
+        {{ error_field|striptags }}: {{ error_message|striptags }}
+      {% endfor %}
+
+    <form action="upload" method="post" enctype="multipart/form-data" >   
+        {% csrf_token %}
+          <label for="exampleFormControlFile1">Company A</label>
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <input type="file" value="John" class="custom-file-input" id="inputGroupA" name="inputGroupA">
+
+              <input hidden id="GroupA" type="text" name="GroupA" maxlength="100"  value="inputGroupA" >
+              <label id= "labelA" class="custom-file-label" for="inputGroupA">Choose file</label>
+            </div>
+            <div class="input-group-append">
+              <input type ="submit" value="Upload" class="btn btn-primary">
+            </div>
+          </div>
+          <p> Last update : </p>
+    </form>
+
+    <form action="upload" method="post" enctype="multipart/form-data"> 
+      {% csrf_token %}
+      <label for="exampleFormControlFile1">Company B</label>
+      <div class="input-group mb-3">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="inputGroupB" name="inputGroupB">
+
+          <input hidden id="GroupB" type="text" name="GroupB" maxlength="100"  value="inputGroupB">
+          <label class="custom-file-label" for="inputGroupB">Choose file</label>
+        </div>
+        <div class="input-group-append">
+          <input type ="submit" value="Upload" class="btn btn-primary">
+        </div>
+      </div>
+      <p> Last update : </p>
+    </form>
+
+      <form action="upload" method="post" enctype="multipart/form-data"> 
+        {% csrf_token %}
+        <label for="exampleFormControlFile1">Company C</label>
+        <div class="input-group mb-3">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="inputGroupC"  name="inputGroupC">
+
+            <input hidden id="GroupC" type="text" name="GroupC" maxlength="100"  value="inputGroupB">
+            <label class="custom-file-label" for="inputGroupC">Choose file</label>
+          </div>
+          <div class="input-group-append">
+            <input type ="submit" value="Upload" class="btn btn-primary">
+          </div>
+        </div>
+        <p> Last update : </p>
+      </form>
+
+      <script type="application/javascript">
+        $('input[type="file"]').change(function(e){
+            var fileName = e.target.files[0].name;
+            console.log(fileName);
+            $('#labelA').html(fileName);
+            console.log(fileName);
+        });
+    </script>
+    
+</body>  
+{% endblock %}

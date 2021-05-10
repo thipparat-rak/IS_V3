@@ -1,0 +1,54 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Edit Chart of Accounts</h5>
+{% endblock %}
+
+{% block style %}
+    <style>
+        form ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+  <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+      {{ message }}
+  </div>
+    {% endfor %}
+{% endif %} 
+        <form method="post" class="m-auto" >
+            {% csrf_token %}
+            <!-- {{ form|crispy }} -->
+            <div class="container">
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.company_code|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.fs_group|as_crispy_field}}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3 mb-0">
+                        {{ form.account_code|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-9 mb-0">
+                        {{ form.account_name|as_crispy_field }}
+                    </div>
+                </div>
+
+            </div>
+            <p class="mt-4 text-center">
+                <button class="btn btn-info">Save</button>
+                <a href="{% url 'CoaMasterSummary' %}" class="btn btn-secondary">Cancel</a>
+            </p> 
+        </form>
+
+{% endblock %}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Consolidate Framework</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  </link>
+
+
+
+</head>
+
+<body>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}javascript-settings.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1569818907/jquery.table2excel.min.js"></script>
+  <style>
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+  {% block style %}
+  {% endblock %}
+
+  <nav class="navbar navbar-default navbar-fixed-top navbar-expand-lg navbar-dark" style="background-color: #5DA0A2;">
+
+    <div class="navbar-header">
+      <img src="https://www.img.in.th/images/acb4ed61c49d52188e0ef7b4921dbbf6.png" width="30" height="30"
+        class="d-inline-block align-top" alt="" loading="lazy">
+
+      <a class="navbar-brand" href="/Home">iConso</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        {% if user.groups.all.0.name == 'Manager' %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Working </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/ImportTB">Import trial balance(TB)</a>
+                <a class="dropdown-item" href="/ImportRPT">Import intercompany transactions</a>
+              <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/ReclassSummary">Reclassify journals</a>
+                <a class="dropdown-item" href="/TakeEqSummary">Take equity transaction</a>
+              <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/RptResult">Eliminate intercompany transactions</a>
+                <a class="dropdown-item" href="/Working_bs">Working Consolidated Balance Sheet</a>
+                <a class="dropdown-item" href="/Working_pl">Working Consolidated Profit&Loss</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Report </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/Report_bs">Balance sheet statement</a>
+              <a class="dropdown-item" href="/Report_pl">Profit & Loss statement</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Maintain</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/CoaMasterSummary">Chart of Accounts</a>
+              <a class="dropdown-item" href="/FsGroupingSummary">Financial grouping</a>            
+              <a class="dropdown-item" href="/CompanySummary">Company profile</a>            
+            <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/PeriodsSummary">Accounting period</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Member</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/MemberSummary">Member Summary</a>
+        </div>
+        </li>
+        {% elif user.groups.all.0.name == 'Accountant' %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Working </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/ImportTB">Import trial balance(TB)</a>
+                <a class="dropdown-item" href="/ImportRPT">Import intercompany transactions</a>
+              <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/ReclassSummary">Reclassify journals</a>
+                <a class="dropdown-item" href="/TakeEqSummary">Take equity transaction</a>
+              <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/RptResult">Eliminate intercompany transactions</a>
+                <a class="dropdown-item" href="/Working_bs">Working Consolidated Balance Sheet</a>
+                <a class="dropdown-item" href="/Working_pl">Working Consolidated Profit&Loss</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Report </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/Report_bs">Balance sheet statement</a>
+              <a class="dropdown-item" href="/Report_pl">Profit & Loss statement</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Maintain</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/CoaMasterSummary">Chart of Accounts</a>
+              <a class="dropdown-item" href="/FsGroupingSummary">Financial grouping</a>            
+              <a class="dropdown-item" href="/CompanySummary">Company profile</a>            
+            </div>
+          </li>
+        {% elif user.groups.all.0.name == 'Viewer' %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Report </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/Report_bs">Balance sheet statement</a>
+              <a class="dropdown-item" href="/Report_pl">Profit & Loss statement</a>
+          </li>
+
+        {% else %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Maintain </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/ImportCOA">Import Chart of Accounts</a>
+              <a class="dropdown-item" href="/ImportFsGrouping">Import Financial grouping</a> 
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Report </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/SubscriptionReport">Subscription report</a>
+              <a class="dropdown-item" href="/CompanyMemberReport">Company member report</a>
+              <a class="dropdown-item" href="/PlanPriceReport">Plans and pricing report</a> 
+              <a class="dropdown-item" href="/UserReport">User report</a>
+              <a class="dropdown-item" href="/AdminLogReport">Admin log entry report</a> 
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin" tabindex="-1" aria-disabled="true">Admin Page</a>
+          </li>
+        {% endif %}
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false">
+            <i class="fas fa-user"></i> Welcome, {{user.username}}</a>
+          <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+            <a class="dropdown-item" href="/UserProfile">User Profile</a>
+            <a class="dropdown-item" href="/ChangePassword">Change password</a>
+            
+            <a class="dropdown-item" href="/Logout">Log out</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+
+    {% block header %}
+
+    {% endblock %}
+  </div>
+
+  <div class="container">
+    {% block content %}
+
+    {% endblock %}
+  </div>
+
+</body>
+</html>

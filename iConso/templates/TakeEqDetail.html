@@ -1,0 +1,151 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Take equity transaction</h5>
+<br>
+{% endblock %}
+
+{% block style %}
+   
+<style>
+  /* style ของ row */
+  tbody>tr>:nth-child(2){text-align:left;}
+  tbody>tr>:nth-child(4){text-align:right;}
+  tbody>tr>:nth-child(5){text-align:right;}
+  tfoot>tr>:nth-child(2){text-align:right;}
+  tfoot>tr>:nth-child(3){text-align:right;}
+
+</style>
+    
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+{% if messages %}
+    {% for message in messages %}
+  <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+      {{ message }}
+  </div>
+    {% endfor %}
+{% endif %} 
+
+
+  <!--ตาราง Header-->
+  <head>
+    <div class="card bg-white mb-3">
+      <div class="card-body shadow ">
+        <div class="col-auto">
+        <div class="container">
+          <div class="form-row">
+            <div class="form-group col-md-6 mb-0">
+              <b>Period Code : </b>  {{ TakeEqHeader.period_code }}
+            </div>
+            <div class="form-group col-md-6 mb-0">
+              <b>Journal Number : </b>  {{ TakeEqHeader.journal_no }}
+            </div>
+        </div>
+          <div class="form-row">
+            <div class="form-group col-md-6 mb-0">
+              <b>Company Code : </b>  {{ TakeEqHeader.company_code }}
+            </div>
+            <div class="form-group col-md-6 mb-0">
+              <b>Parent company Code : </b>  {{ TakeEqHeader.Parent_company_code }}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-12 mb-0">
+              <b>Journal description : </b>  {{ TakeEqHeader.journal_description}}
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </head>
+      {% csrf_token %}
+      <div class="card-body  shadow py-2">
+        <div class="card border-left-info shadow h-100 ">
+        <div class="col-auto">
+
+          
+  <!--ตาราง-->
+  <form method="post" action="" class="m-auto" >
+  {% csrf_token %}
+  <div class="table table-sm table-editable">
+    <span class="table-add float-right mb-3 mr-2 "></span>
+    <table id="header" class="table table-bordered table-responsive-md  text-center " >
+      <thead class="table-info">
+        <tr>
+          <th class="text-center">Account Code</th>
+          <th class="text-center">Account Name</th>
+          <th class="text-center">Intercompany Code</th>
+          <th class="text-center">Debit</th>
+          <th class="text-center">Credit</th>
+        </tr>
+      </thead>
+		  {% for a in data %}
+      <tbody>
+        <tr class="border-0" >
+            <td>{{ a.account_code }} </td>
+            <td>{{ a.account_name }} </td>
+            <td>{{ a.rpt_interco_code }} </td>
+            <td class="debit" >{{ a.debit|floatformat:2|default_if_none:"" }}</td>
+            <td class="credit">{{ a.credit|floatformat:2 }}</td>
+            {% if TakeEqFormset.can_delete %}
+            <li>{{ a.DELETE }}</li>
+            {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class = "table-secondary">
+        <tr>
+          <th colspan="3">Total </th>
+          <th id ="sum_debit"> {{ sum_debit.debit__sum |floatformat:2}} </th>
+          <th id ="sum_credit"> {{ sum_credit.credit__sum |floatformat:2}} </th>
+        </tr>
+      </tfoot>
+  </div>
+  </table>
+</form>
+<p>
+  <div class="mt-4 text-center">
+    <a href="{% url 'TakeEqSummary' %}" class="btn btn-secondary">Back</a>
+  </div>
+</p>
+
+<script>
+const $debit = $('.debit');
+$debit.on("input", function() {
+  let sum_debit = 0
+  $debit.each(function() {
+    sum_debit += Number(this.value);
+  });
+  $("#sum_debit").text(sum_debit);
+});
+
+const $credit = $('.credit');
+$credit.on("input", function() {
+  let sum_credit = 0
+  $credit.each(function() {
+    sum_credit += Number(this.value);
+  });
+  $("#sum_credit").text(sum_credit);
+});
+
+
+  // $(document).read(function ()
+  // {
+  //   var debit;
+  //   var sum_debit = 0;
+  //   $('td:nth-child(3)').each(function() 
+  //   {
+  //     debit = $(this).html();
+  //     if(!isNaN(value) && value.length != 0) {
+  //       sum_debit += parseFloat($(this).val());
+  //     $('#sum').text(sum_debit)
+  //     }
+  //   });
+  // });​​​​​​​​​  
+</script>
+{% endblock %}

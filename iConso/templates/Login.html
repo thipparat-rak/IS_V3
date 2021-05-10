@@ -1,0 +1,42 @@
+{% extends 'main_userpage.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <style>
+        form {
+            max-width: 350px;
+            margin: auto;
+        }
+    </style>
+
+    <form method="post">
+        <br>
+        <h3 class="text-center">Login</h3>
+        <br>
+          <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors}}
+
+            {{ form.username.errors}}
+            <!-- <label for="{{ form.username.id_for_label }}">Email :</label>
+            {{ form.username|as_crispy_field  }} -->                    
+            <label for="{{ form.username.id_for_label }}">Email*</label>
+            <input type="input" class="form-control" name="username" id="inputEmail" labels = "Email" required >
+            <br>
+            {{ form.password.errors }}
+            <!-- <label for="{{ form.password.id_for_label }}">Password :</label>
+            {{ form.password|as_crispy_field  }} -->            
+            <label for="{{ form.password.id_for_label }}">Password*</label>
+            <input type="password" class="form-control" name="password" id="inputPass"  required>
+            <!-- <P> 
+              <div id="resetpassword" >
+                <a href="/ResetPass" id="register-link" class="text-white">Forgot password?</a>
+              </div>
+            </P> -->
+            <p class="mt-4 text-center ">
+              <input type="submit" value="Login" class="btn btn-primary">
+              <!-- <a href="{% url 'Register' %}" class="btn btn-secondary text-white text-center">Register</a>  -->
+            </p>
+          </form>
+    </form>
+{% endblock %}

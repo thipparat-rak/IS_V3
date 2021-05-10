@@ -1,0 +1,116 @@
+{% extends 'main.html' %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Take equity transaction Summary</h5>
+{% endblock %}
+{% block content %}
+
+<!-- Search Bar-->
+<!-- <body>
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3 col-sm-8 offset-sm-2 col-12">
+        <div class="input-group" id="adv-search">
+          <input type="text" class="form-control form-control-search" placeholder="Serch for Reclassify journal" />
+          <div class="input-group-btn">
+            <div class="btn-group" role="group">
+
+              <div class="dropdown ">
+                <button type="button" class="btn btn-secondary dropdown-toggle "
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Search
+                </button>
+                <div class="dropdown-menu  dropdown-menu-center  mr-2 " role="menu">
+                  <form class = "mr-2">
+                    <div class="form-group  ">
+                      <label for="company" class="text-dark">Company</label>
+                      <select class="form-control" id="company">
+                        <option>Company A</option>
+                        <option>Company B</option>
+                        <option>Company C</option>
+                      </select>
+                    </div>
+                    <div class="form-group ">
+                      <label for="period">Period</label>
+                      <input type="text" class="form-control" id="period" placeholder="Enter period">
+                    </div>
+                    <div class="form-group    text-center">
+                      <button type="submit" class="btn btn-secondary ">Search</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body> -->
+
+
+<!--ปุ่มกด-->
+<div class="card-body">
+  <div class="btn-group ">
+    <a href="{% url 'TakeEqCreate' %}" class="btn btn-info btn-sm" role="button">Add New Transaction</a>
+    &nbsp;&nbsp;
+    <div class="dropdown">
+      <button type="dropdown" class="btn btn-secondary btn-sm dropdown dropdown-toggle "
+        data-toggle="dropdown" > Search
+      </button>
+        <div class="dropdown-menu">
+          <div class="form-group">
+            <form class="px-4 py-3" method="get">
+              {{journalFilter.form.as_p}}
+              <p class="mt-4 text-center">
+                  <button type="submit" class="btn btn-info btn-sm ">Search</button>
+                  <a href="{% url 'TakeEqSummary' %}" class="btn btn-secondary  btn-sm">Cancel</a>
+              </p>
+            </form>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <!--ตาราง-->
+  <div id="table" class="table table-sm table-editable ">
+    <span class="table-add float-right mb-3 mr-2"></span>
+    <table class="table table-bordered table-responsive-md  text-center">
+      <thead class="table-info">
+        <tr>
+          <th class="text-center">Journal No.</th>
+          <th class="text-center">Company Code</th>
+          <th class="text-center">Period Code</th>
+          <th class="text-center">Journal Description</th>
+          <th class="text-center"></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for r in data %}
+      <tr>
+          <td>{{ r.journal_no }} </td>
+          <td>{{ r.company_code }} </td>
+          <td>{{ r.period_code }} </td>
+          <td>{{ r.journal_description }} </td>
+          <td>
+            <a href="{% url 'TakeEqDetail' id=r.id %}" class="btn btn-info btn-sm">View</a> 
+            <a href="{% url 'TakeEqUpdate' id=r.id %}" class="btn btn-primary btn-sm">Edit</a> 
+            <a href="javascript:del('{% url 'TakeEqHeaderDelete' id=r.id %}')" class="btn btn-danger btn-sm">Delete</a>
+            <script>
+                function del(url) {
+                    if (confirm('Are you sure you want to delete?')) {
+                        document.location = url;
+                    }
+                }
+            </script>
+        </td>
+      </tr>
+      
+      </tbody>
+      {% endfor %}
+
+    </table>
+  </div>
+</div>
+</body>
+
+{% endblock %}

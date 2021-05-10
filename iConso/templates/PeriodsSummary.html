@@ -1,0 +1,71 @@
+{% extends 'main.html' %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Accounting periods</h5>
+{% endblock %}
+{% block content %}
+  <!-- Search Bar-->
+    <body>
+      <form>
+        {{ form.PeriodsSearch }}
+        {{ form.PeriodsSearch }}
+      </form>
+  </body>
+  
+  
+  <!--ปุ่มกด-->
+  <div class="card-body">
+    <form>
+      <a href="{% url 'PeriodsCreate' %}" class="btn btn-info btn-sm">Add New Period</a>
+    </form>
+  
+    <!--ตาราง-->
+    <div id="table" class="table table-sm table-editable ">
+      <span class="table-add float-right mb-3 mr-2"></span>
+      <table class="table table-bordered table-responsive-md  text-center">
+        <thead class="table-info">
+          <tr>
+            <!-- <th class="text-center">Company Code</th> -->
+            <th class="text-center">Period Code</th>
+            <th class="text-center">Period Name</th>
+            <th class="text-center">Start Date</th>
+            <th class="text-center">End Date</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Create Date</th>
+            <th class="text-center">Last Update</th>
+            <th class="text-center"></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for a in data %}
+        <tr>
+            <!-- <td>{{ a.company_code }} </td> -->
+            <td>{{ a.period_code }} </td>
+            <td>{{ a.period_description }} </td>
+            <td>{{ a.period_date_from|date:'j M Y' }}</td>
+            <td>{{ a.period_date_to|date:'j M Y'  }}</td>
+            <td>{{ a.period_status }}</td>
+            <td>{{ a.period_create|date:'j M Y' }}</td>
+            <td>{{ a.period_update|date:'j M Y' }}</td>
+            <td>
+                <a href="{% url 'PeriodsUpdate' id=a.id %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="javascript:del('{% url 'PeriodsDelete' id=a.id %}')" class="btn btn-danger btn-sm">Delete</a>
+                <script>
+                    function del(url) {
+                        if (confirm('Are you sure you want to delete?')) {
+                            document.location = url;
+                        }
+                    }
+                </script>
+            </td>
+        </tr>
+        
+        </tbody>
+        {% endfor %}
+
+      </table>
+    </div>
+  </div>
+  </body>
+  
+  {% endblock %}

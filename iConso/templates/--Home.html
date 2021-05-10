@@ -1,0 +1,174 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<head>
+  <main role="main" class="container">
+    <div class="jumbotron">
+      <h2>Consolidation Financial System</h2>
+      <p class="lead">Welcome K.{{user.first_name|title}}  {{user.last_name|title}}  </p>
+    </div>
+  </main>
+</head>
+
+<body>
+  <!-- Content Row -->
+  <div class="container">
+    <div class="row">
+      <!-- Card  -->
+      <div class="col-xl-5 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-4">
+                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Current Period</div>
+                {% for r in CurrentPeriod %}
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{r.period_code}}</div>
+                Start Date : {{ r.period_date_from|date:'j M Y' }} 
+                End Date : {{ r.period_date_to |date:'j M Y'}}
+                {% endfor %}
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="col-xl-7 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Tasks</div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">80%</div>
+                  </div>
+                  <div class="col">
+                    <div class="progress progress-sm mr-2">
+                      <div class="progress-bar bg-warning" role="progressbar" style="width: 80%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+      <!-- Content Column -->
+
+      <!-- Guideline -->
+      <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h5 class="m-0 font-weight-bold text-info">Guideline</h5>
+          </div>
+          <div class="card-body">
+            <h6 class="m-0 font-weight-bold">Process Steps</h6>
+            Step1: &rarr; <a href="/ImportTB">Import trial balance(TB)</a><br>
+            Step2: &rarr; <a href="/ReclassSummary">Reclassify journals</a><br>
+            Step3: &rarr; <a href="/ImportRpt">Import intercompany transactions</a><br>
+            Step4: &rarr; <a href="/RptResult">Eliminate intercompany transactions</a><br>
+            Step5: &rarr; <a href="/TakeEqSummary">Take equity transactions</a><br>
+            <P>
+            <h6 class="m-0 font-weight-bold">View results</h6>
+            Result1: &rarr; <a href="/Working_bs">Working Consolidated Balance Sheet</a><br>
+            Result2: &rarr; <a href="/Working_pl">Working Consolidated Profit&Loss</a>
+            <P>
+            <h6 class="m-0 font-weight-bold">Issue financial statements</h6>
+            Report1: &rarr; <a href="/Report_bs">Balance sheet statement</a><br>
+            Report2: &rarr; <a href="/Report_pl">Profit & Loss statement</a>
+            <P>
+            <h6 class="m-0 font-weight-bold">Close period</h6>
+            Final Step: &rarr; <a href="/Periods">Close accounting period</a><br>
+            No additional transactions can be reported in the accounting period being closed.
+
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-6 mb-4">
+        <!-- Progress Card -->
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h5 class="m-0 font-weight-bold text-info">Progress</h5>
+          </div>
+          <div class="card-body">
+            <h4 class="small font-weight-bold">Over All Progress <span class="float-right">80%</span></h4>
+            <div class="progress mb-4">
+              <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80"
+                aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="chart-area">
+              <canvas id="progresschart"></canvas>
+              <script>
+                var myChart = new Chart(document.getElementById("progresschart"), {
+                  type: 'horizontalBar',
+                  data: {
+                    
+                    labels: [
+                      "Import trial balance(TB)",
+                      "Reclassify journals",
+                      "Import intercompany transactions",
+                      "Eliminate intercompany transactions",
+                      "Take equity transactions"
+                    ],
+                    datasets: [
+                      {
+                        label: "Percentage (%)",
+                        backgroundColor: ["#1cc88a", "#1cc88a", "#36b9cc", "#f6c23e", "#e74a3b"],
+                        data: [100, 100, 80, 50, 20],
+                        barPercentage: 0.7,
+                      }
+                    ]
+                  },
+                  
+                  options: {
+                    legend: { 
+                      display: false,
+                       },
+                    
+                    scales: {
+                      xAxes: [{
+                        ticks: {
+                          min: 0,
+                          max: 100,
+                          callback: function(value) {
+                            return value + "%"
+                          }
+                        },
+                        gridLines: {
+                          display: false,
+                          drawBorder: false,
+                        },
+                      }],
+                      yAxes: [{
+                        gridLines: {
+                         display: false,
+                         drawBorder: false,
+                        },
+                        ticks: {
+                          display: true, 
+                          },
+                      }]
+                    }
+                  }
+                });
+              </script>
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    {% endblock %}

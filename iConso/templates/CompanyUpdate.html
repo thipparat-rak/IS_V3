@@ -1,0 +1,75 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Edit Company profile</h5>
+<br>
+{% endblock %}
+
+{% block style %}
+    <style>
+        form ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+  <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+      {{ message }}
+  </div>
+    {% endfor %}
+{% endif %} 
+    
+        <form method="post" class="m-auto" >
+            {% csrf_token %}
+            <!-- {{ form|crispy }} -->
+            <div class="container">
+                <div class="form-row">
+                    <div class="form-group col-md-12 mb-0">
+                        {{ form.company_name|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.company_code|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.company_est_date|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.country|as_crispy_field }}
+                    </div>
+                        <div class="form-group col-md-6 mb-0">
+                        {{ form.currency|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4 mb-0">
+                        {{ form.company_type|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-3 mb-0">
+                        {{ form.consolidation_rate|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.company_start_date|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-2 mb-0">
+                        {{ form.company_end_date|as_crispy_field }}
+                    </div>
+                </div>
+            </div>
+            <p class="mt-4 text-center">
+                <button class="btn btn-info">Save</button>
+                <a href="{% url 'CompanySummary' %}" class="btn btn-secondary">Cancel</a>
+            </p>    
+        </form>
+
+
+{% endblock %}

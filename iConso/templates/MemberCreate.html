@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Add New User</h5>
+<br>
+{% endblock %}
+{% block content%}
+  <style>
+    form {
+        max-width: 450px;
+        margin: auto;
+    }
+  </style>
+
+  <body>
+    {% if messages %}
+      {% for message in messages %}
+    <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+        {{ message }}
+    </div>
+      {% endfor %}
+    {% endif %} 
+      
+    <div class="container">
+      <form method="post">
+      {% csrf_token %}
+      <div class="col-md-12 "> 
+        <!-- <p>{{form | crispy}}</p> -->
+        {{ form.first_name|as_crispy_field }}
+        {{ form.last_name|as_crispy_field }}
+        {{ form.username|as_crispy_field }}
+        {{ form.password1|as_crispy_field }}
+        {{ form.password2|as_crispy_field }}
+        
+        <p class="text-center">
+          <input type="submit" class="btn btn-primary" name="Accountant" value="Save as Accountant">
+          <input type="submit" class="btn btn-primary" name="Viewer" value="Save as Viewer">
+        </p>
+      </form>
+</div>
+</body>
+{% endblock %}

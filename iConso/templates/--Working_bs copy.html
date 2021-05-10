@@ -1,0 +1,1046 @@
+{% extends 'main.html' %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Working Consolidated Balance Sheet</h5>
+{% endblock %}
+
+{% block content %}
+  
+  <style>
+    .linehead {
+      font-weight: bold;
+      background-color: rgb(243, 241, 241);
+    }
+
+    .linesum {
+      font-weight: bold;
+    }
+  </style>
+  <script src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1569818907/jquery.table2excel.min.js"></script>
+
+  <script>
+    $(function () {
+      $("#exporttable").click(function (e) {
+        var table = $("#workingBStable");
+        if (table && table.length) {
+          $(table).table2excel({
+            exclude: ".noExl",
+            name: "Excel Document Name",
+            filename: "WorkingConsoBS_" + new Date().toISOString().replace(/[\-\:\.]/g, "") + ".xls",
+            fileext: ".xls",
+            exclude_img: true,
+            exclude_links: true,
+            exclude_inputs: true,
+            preserveColors: true
+          });
+        }
+      });
+    });
+  </script>
+
+<!-- Search Bar-->
+
+<body>
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3 col-sm-8 offset-sm-2 col-12">
+      <div class="input-group" id="search">
+        <input type="text" class="form-control form-control-search" placeholder="Search for Accounting period" />
+        <button type="submit" class="btn btn-info "><span class="fa fa-search" aria-hidden="true">Search</span></button>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+</body>
+<br>
+
+<body>
+  <div class="col-md-4 ">
+    <button id="exporttable" class="btn btn-success">Export</button>
+  </div>
+  <div class="table-responsive "></div>
+    <table id="workingBStable" style="width:100%" class="table table-sm table-bordered table-hover ">
+
+      <thead class="table-info">
+        <tr>
+          <th class="text-center">FS Group code</th>
+          <th class="text-center">FS Group Name</th>
+          <th class="text-center">Company A</th>
+          <th class="text-center">Company B</th>
+          <th class="text-center">Company C</th>
+          <th class="text-center">Total</th>
+          <th class="text-center">Eliminate</th>
+          <th class="text-center">Consolidate</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr class="linehead" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ :</td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+        </tr>
+        <tr class="linehead" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_C</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์หมุนเวียน :</td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CA</td>
+          <td class="text-nowrap" style="text-align:left">เงินสดและรายการเทียบเท่าเงินสด</td>
+          <td class="text-nowrap">60</td>
+          <td class="text-nowrap">60</td>
+          <td class="text-nowrap">60</td>
+          <td class="text-nowrap">180</td>
+          <td class="text-nowrap">-60</td>
+          <td class="text-nowrap">120</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CA01</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;เงินสดในมือ</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">30</td>
+          <td class="text-nowrap">-10</td>
+          <td class="text-nowrap">20</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CA02</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;เงินฝากออมทรัพย์</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">30</td>
+          <td class="text-nowrap">-10</td>
+          <td class="text-nowrap">20</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CA03</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;เงินฝากกระแสรายวัน</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">30</td>
+          <td class="text-nowrap">-10</td>
+          <td class="text-nowrap">20</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CA04</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;เงินฝากประจำ</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">30</td>
+          <td class="text-nowrap">-10</td>
+          <td class="text-nowrap">20</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CA05</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;ใบรับฝากเงิน</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">30</td>
+          <td class="text-nowrap">-10</td>
+          <td class="text-nowrap">20</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CA06</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;กองทุนเปิด</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">10</td>
+          <td class="text-nowrap">30</td>
+          <td class="text-nowrap">-10</td>
+          <td class="text-nowrap">20</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CB</td>
+          <td class="text-nowrap" style="text-align:left">ลูกหนี้การค้าและลูกหนี้หมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CC</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ที่เกิดจากสัญญา-หมุนเวียน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CD</td>
+          <td class="text-nowrap" style="text-align:left">เงินให้กู้ยืมระยะสั้น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CE</td>
+          <td class="text-nowrap" style="text-align:left">สินค้าคงเหลือ</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CF</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ภาษีเงินได้ของงวดปัจจุบัน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CG</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ชีวภาพหมุนเวียน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CH</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ทางการเงินหมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CI</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ทางการเงินหมุนเวียนที่ไม่ใช่เงินสดที่เป็นหลักประกัน
+          </td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CJ</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์หมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_CK</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ไม่หมุนเวียนหรือกลุ่มสินทรัพย์ที่จะจำหน่าย
+            ที่จัดประเภทเป็นสินทรัพย์ที่ถือไว้เพื่อขาย</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center"></td>
+          <td class="text-nowrap" style="text-align:left">รวมสินทรัพย์หมุนเวียน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linehead" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_N</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ไม่หมุนเวียน</td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_NA</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ทางการเงินไม่หมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_NB</td>
+          <td class="text-nowrap" style="text-align:left">เงินลงทุนในบริษัทย่อย การร่วมค้า และบริษัทร่วม</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_NC</td>
+          <td class="text-nowrap" style="text-align:left">ลูกหนี้การค้าและลูกหนี้ไม่หมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_ND</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ที่เกิดจากสัญญา-ไม่หมุนเวียน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_NE</td>
+          <td class="text-nowrap" style="text-align:left">เงินให้กู้ยืมระยะยาว</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_NF</td>
+          <td class="text-nowrap" style="text-align:left">อสังหาริมทรัพย์เพื่อการลงทุน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_NG</td>
+          <td class="text-nowrap" style="text-align:left">ที่ดิน อาคารและอุปกรณ์</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_NH</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์สิทธิการใช้</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_NI</td>
+          <td class="text-nowrap" style="text-align:left">ค่าความนิยม</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_NJ</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ไม่มีตัวตนอื่นนอกจากค่าความนิยม</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_NK</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ชีวภาพไม่หมุนเวียน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_NL</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ภาษีเงินได้รอการตัดบัญชี</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_NM</td>
+          <td class="text-nowrap" style="text-align:left">
+            สินทรัพย์ทางการเงินไม่หมุนเวียนที่ไม่ใช่เงินสดที่เป็นหลักประกัน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BA_NN</td>
+          <td class="text-nowrap" style="text-align:left">สินทรัพย์ไม่หมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center"></td>
+          <td class="text-nowrap" style="text-align:left">รวมสินทรัพย์ไม่หมุนเวียน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linehead" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center"></td>
+          <td class="text-nowrap" style="text-align:left">รวมสินทรัพย์</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linehead" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL</td>
+          <td class="text-nowrap" style="text-align:left">หนี้สิน</td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+        </tr>
+        <tr class="linehead" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_C</td>
+          <td class="text-nowrap" style="text-align:left">หนี้สินหมุนเวียน</td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_CA</td>
+          <td class="text-nowrap" style="text-align:left">เงินเบิกเกินบัญชีและเงินกู้ยืมระยะสั้นจากสถาบันการเงิน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_CB</td>
+          <td class="text-nowrap" style="text-align:left">เจ้าหนี้การค้าและเจ้าหนี้หมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_CC</td>
+          <td class="text-nowrap" style="text-align:left">หนี้สินที่เกิดจากสัญญา-หมุนเวียน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_CD</td>
+          <td class="text-nowrap" style="text-align:left">ส่วนของหนี้สินระยะยาวที่ถึงกำหนดชำระภายในหนึ่งปี</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_CE</td>
+          <td class="text-nowrap" style="text-align:left">ส่วนของหนี้สินตามสัญญาเช่าที่ถึงกำหนดชำระภายในหนึ่งปี</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_CF</td>
+          <td class="text-nowrap" style="text-align:left">เงินกู้ยืมระยะสั้น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_CG</td>
+          <td class="text-nowrap" style="text-align:left">ภาษีเงินได้นิติบุคคลค้างจ่าย</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_CH</td>
+          <td class="text-nowrap" style="text-align:left">ประมาณการหนี้สินหมุนเวียนสำหรับผลประโยชน์พนักงาน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_CI</td>
+          <td class="text-nowrap" style="text-align:left">ประมาณการหนี้สินหมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_CJ</td>
+          <td class="text-nowrap" style="text-align:left">หนี้สินทางการเงินหมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_CK</td>
+          <td class="text-nowrap" style="text-align:left">หนี้สินหมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_CL</td>
+          <td class="text-nowrap" style="text-align:left">
+            หนี้สินที่รวมในกลุ่มสินทรัพย์ที่จะจำหน่ายที่จัดประเภทเป็นสินทรัพย์ที่ถือไว้เพื่อขาย</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center"></td>
+          <td class="text-nowrap" style="text-align:left">รวมหนี้สินหมุนเวียน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linehead" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_N</td>
+          <td class="text-nowrap" style="text-align:left">หนี้สินไม่หมุนเวียน</td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_NA</td>
+          <td class="text-nowrap" style="text-align:left">เงินกู้ยืมระยะยาว</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_NB</td>
+          <td class="text-nowrap" style="text-align:left">หนี้สินตามสัญญาเช่า</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_NC</td>
+          <td class="text-nowrap" style="text-align:left">เจ้าหนี้การค้าและเจ้าหนี้ไม่หมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_ND</td>
+          <td class="text-nowrap" style="text-align:left">หนี้สินที่เกิดจากสัญญา-ไม่หมุนเวียน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_NE</td>
+          <td class="text-nowrap" style="text-align:left">หุ้นกู้</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_NF</td>
+          <td class="text-nowrap" style="text-align:left">หุ้นกู้ที่มีลักษณะคล้ายทุน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_NG</td>
+          <td class="text-nowrap" style="text-align:left">หนี้สินภาษีเงินได้รอการตัดบัญชี</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_NH</td>
+          <td class="text-nowrap" style="text-align:left">ประมาณการหนี้สินไม่หมุนเวียนสำหรับผลประโยชน์พนักงาน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_NI</td>
+          <td class="text-nowrap" style="text-align:left">ประมาณการหนี้สินไม่หมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_NJ</td>
+          <td class="text-nowrap" style="text-align:left">หนี้สินทางการเงินไม่หมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BL_NK</td>
+          <td class="text-nowrap" style="text-align:left">หนี้สินไม่หมุนเวียนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center"></td>
+          <td class="text-nowrap" style="text-align:left">รวมหนี้สินไม่หมุนเวียน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center"></td>
+          <td class="text-nowrap" style="text-align:left">รวมหนี้สิน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linehead" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE</td>
+          <td class="text-nowrap" style="text-align:left">ส่วนของผู้ถือหุ้น</td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_A</td>
+          <td class="text-nowrap" style="text-align:left">ทุนเรือนหุ้น :</td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+          <td class="text-nowrap"></td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_AA</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;ทุนจดทะเบียน : </td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_AA01</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;&emsp;หุ้นบุริมสิทธิ</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_AA02</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;&emsp;หุ้นสามัญ</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_AB</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;ทุนที่ออกและชำระแล้ว : </td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_AB01</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;&emsp;หุ้นบุริมสิทธิ</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_AB02</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;&emsp;หุ้นสามัญ</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_B</td>
+          <td class="text-nowrap" style="text-align:left">ส่วนเกิน (ต่ำกว่า) มูลค่าหุ้น :</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_BA</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;ส่วนเกิน (ต่ำกว่า) มูลค่าหุ้นบุริมสิทธิ</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_BB</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;ส่วนเกิน (ต่ำกว่า) มูลค่าหุ้นสามัญ</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_C</td>
+          <td class="text-nowrap" style="text-align:left">ส่วนเกิน (ต่ำกว่า) ทุนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_D</td>
+          <td class="text-nowrap" style="text-align:left">ส่วนเกินทุนหุ้นทุนซื้อคืน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_E</td>
+          <td class="text-nowrap" style="text-align:left">ใบสำคัญแสดงสิทธิที่จะซื้อหุ้น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_F</td>
+          <td class="text-nowrap" style="text-align:left">กำไร (ขาดทุน) สะสม :</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_FA</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;จัดสรรแล้ว :</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_FA01</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;&emsp;ทุนสำรองตามกฎหมาย</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_FA02</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;&emsp;ทุนสำรองอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_FB</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;ยังไม่ได้จัดสรร</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_G</td>
+          <td class="text-nowrap" style="text-align:left">หุ้นทุนซื้อคืน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_H</td>
+          <td class="text-nowrap" style="text-align:left">หุ้นกู้ที่มีลักษณะคล้ายทุน :</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_HA</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;หุ้นกู้ที่มีลักษณะคล้ายทุน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_HB</td>
+          <td class="text-nowrap" style="text-align:left">&emsp;หุ้นกู้ด้อยสิทธิที่มีลักษณะคล้ายทุน</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_I</td>
+          <td class="text-nowrap" style="text-align:left">ส่วนได้เสียทุนอื่น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_J</td>
+          <td class="text-nowrap" style="text-align:left">องค์ประกอบอื่นของส่วนของผู้ถือหุ้น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center"></td>
+          <td class="text-nowrap" style="text-align:left">รวมส่วนของบริษัทใหญ่</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr style="text-align:right">
+          <td class="text-nowrap" style="text-align:center">BE_K</td>
+          <td class="text-nowrap" style="text-align:left">ส่วนได้เสียที่ไม่มีอำนาจควบคุม</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linesum" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center"></td>
+          <td class="text-nowrap" style="text-align:left">รวมส่วนของผู้ถือหุ้น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+        <tr class="linehead" style="text-align:right">
+          <td class="text-nowrap" style="text-align:center"></td>
+          <td class="text-nowrap" style="text-align:left">รวมหนี้สินและส่วนของผู้ถือหุ้น</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">80</td>
+          <td class="text-nowrap">240</td>
+          <td class="text-nowrap">-80</td>
+          <td class="text-nowrap">160</td>
+        </tr>
+
+
+
+
+
+      </tbody>
+
+    </table>
+  </div>
+  </center>
+</body>
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Import COA file</h5>
+{% endblock %}
+
+{% block content %}
+<body>
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+          {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %} 
+  <br>
+  <form method="post" enctype="multipart/form-data">
+    <div class="input-group-append">
+      <div class="custom-file">
+      {% csrf_token %}
+      {{ form.COAforms.label }}
+      {{ form.COAforms  }}
+      <button type="submit" class="btn btn-primary btn-sm">Upload</button>
+    </div></div>
+  </form>
+</body>
+
+
+{% endblock %}

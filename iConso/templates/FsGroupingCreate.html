@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Create New Financial grouping</h5>
+<br>
+{% endblock %}
+
+{% block style %}
+    <style>
+        form ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+  <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+      {{ message }}
+  </div>
+    {% endfor %}
+{% endif %} 
+
+    <form method="post" class="m-auto" >
+        {% csrf_token %}
+        <!-- {{ form|crispy }} -->
+        <div class="container">
+            <div class="form-row">
+                <div class="form-group col-md-4 mb-0">
+                    {{ form.account_type|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-8 mb-0">
+                    {{ form.account_subtype|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4 mb-0">
+                    {{ form.fs_group_row|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-8 mb-0">
+                    {{ form.fs_group_name|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4 mb-0">
+                    {{ form.wk_group_row|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-8 mb-0">
+                    {{ form.wk_group_name|as_crispy_field }}
+                </div>
+            </div>        
+            <p class="mt-4 text-center">
+                <button class="btn btn-info">Submit</button>
+                <a href="{% url 'FsGroupingSummary' %}" class="btn btn-secondary">Cancel</a>
+            </p>
+        </div>
+    </form>
+
+
+{% endblock %}

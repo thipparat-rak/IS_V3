@@ -1,0 +1,96 @@
+{% extends 'main.html' %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Financial grouping maintenance</h5>
+{% endblock %}
+
+{% block content %}
+<style>
+  td {font-size: 14px;}
+  thead > tr > th {font-size: 14px;}
+  /* style ของ column */
+  tbody>tr>:nth-child(2){text-align:left;}
+  tbody>tr>:nth-child(4){text-align:left;}
+  tbody>tr>:nth-child(6){text-align:left;}
+
+</style>  
+  <body>
+  </div>
+  <div class="card-body">
+    <!--ปุ่มกด-->
+    <div class="btn-group ">
+
+      <a href="{% url 'FsGroupingCreate' %}" class="btn btn-info btn-sm" role="button">Add Financial grouping</a>
+      &nbsp;&nbsp;
+      <div class="dropdown ">
+        <button type="dropdown" class="btn btn-secondary btn-sm dropdown dropdown-toggle "
+          data-toggle="dropdown" > Search
+        </button>
+          <div class="dropdown-menu">
+            <div class="form-group">
+              <form class="px-4 py-3" method="get">
+                {{FsFilter.form.as_p}}
+                <p class="mt-4 text-center">
+                    <button type="submit" class="btn btn-info btn-sm ">Search</button>
+                    <a href="{% url 'FsGroupingSummary' %}" class="btn btn-secondary  btn-sm">Cancel</a>
+                </p>
+              </form>
+            </div>
+          </div>
+      </div>
+    </div>
+    <!--ตาราง-->
+    <div class="table table-sm table-editable ">
+      <span class="table-add float-right mb-3 mr-2"></span>
+      <table id="table" class="table table-bordered table-responsive-md  text-center">
+        <thead class="table-info">
+          <tr>
+            <!-- <th class="text-center">Company Code</th> -->
+            <th class="text-center">FS Group Code</th>
+            <th class="text-center">FS Group Name</th>
+            <th class="text-center">Working Group Code</th>
+            <th class="text-center">Working Group Name</th>
+            <th class="text-center">Account Type</th>
+            <th class="text-center">Account sub-type</th>
+            <!-- <th class="text-center">FS Parent Group Code</th> -->
+            <!-- <th class="text-center">FS Level</th> -->
+            <!-- <th class="text-center">Show report</th> -->
+            <!-- <th class="text-center">Date Create</th>
+            <th class="text-center">Update Date</th> -->
+            <th></th>
+          </tr>
+        </thead>
+        {% for r in data %}
+        <tbody>
+          <tr>
+            <!-- <td>{{ r.company_code }} </td> -->
+            <td>{{ r.fs_group_row }} </td>
+            <td>{{ r.fs_group_name }} </td>
+            <td>{{ r.wk_group_row }} </td>
+            <td>{{ r.wk_group_name }} </td>
+            <td>{{ r.account_type }} </td>
+            <td>{{ r.account_subtype }} </td>
+            <!-- <td>{{ r.fs_parent_group_code }} </td> -->
+            <!-- <td>{{ r.fs_level }} </td> -->
+            <!-- <td>{{ r.fs_show_status }} </td> -->
+            <!-- <td>{{ r.fs_date_create|date:'j M Y' }} </td>
+            <td>{{ r.fs_date_update|date:'j M Y' }} </td> -->
+            <td>
+                <a href="{% url 'FsGroupingUpdate' id=r.id %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="javascript:del('{% url 'FsGroupingDelete' id=r.id %}')" class="btn btn-danger btn-sm">Delete</a>
+                <script>
+                    function del(url) {
+                        if (confirm('Are you sure you want to delete?')) {
+                            document.location = url;
+                        }
+                    }
+                  </script>
+              </td>
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
+{% endblock %}
+

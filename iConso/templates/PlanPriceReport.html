@@ -1,0 +1,81 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Plans and Pricing Report</h5>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %} 
+    <style>
+        td {
+        border: 1px solid #bbb;
+        padding: 2px 8px 0;
+        font-size: 14px;
+        text-align: center;
+        }
+        thead > tr > th {
+        background-color: #b9e4e6;
+        font-size: 14px;
+        border-bottom: 2px solid #999;
+        }
+        /* style ของ row */
+        tbody>tr>:nth-child(2){text-align:left;}
+        tbody>tr>:nth-child(3){text-align:right;}
+        /* tbody>tr>:last-child{text-align:right;} */
+    </style>
+    <script>
+        $(function () {
+            $("#exporttable").click(function (e) {
+                var table = $("#Consotable");
+                if (table && table.length) {
+                    $(table).table2excel({
+                        exclude: ".noExl",
+                        name: "Excel Document Name",
+                        filename: "PriceListReport_" + new Date().toISOString().replace(/[\-\:\.]/g, "") + ".xls",
+                        fileext: ".xls",
+                        exclude_img: true,
+                        exclude_links: true,
+                        exclude_inputs: true,
+                        preserveColors: true
+                    });
+                }
+            });
+        });
+    </script>
+<form method="post" class="m-auto" >
+    {% csrf_token %}
+    <button id= "exporttable" class="btn btn-info">Export</button>
+</form>
+<div class="table table-sm table-editable ">
+    <span class="table-add float-right mb-3 mr-2"></span>
+    <table id="Consotable" class="table table-bordered table-responsive-md  text-center">
+        <thead class="table-info">
+            <tr>
+                <th>Plan code</th>
+                <th>Plan Description</th>
+                <th>Price</th>
+                <th>Create date</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        {% for r in data %}
+        <tbody>
+            <tr>
+                <td>{{ r.plan_code }} </td>
+                <td>{{ r.plan_description }} </td>
+                <td >{{ r.plan_price |floatformat:2 }}</td>
+                <td>{{ r.plan_date_create|date:'j M Y' }}</td>
+                <td>{{ r.plan_date_update|date:'j M Y' }}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

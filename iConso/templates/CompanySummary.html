@@ -1,0 +1,60 @@
+{% extends 'main.html' %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Company profile</h5>
+
+{% endblock %}
+
+{% block content %}
+    <div class="card-body">
+        <form>
+            <a href="{% url 'CompanyCreate' %}" class="btn btn-info btn-sm">Add New Company</a>
+        </form>
+
+        <div class="table table-sm table-editable ">
+            <span class="table-add float-right mb-3 mr-2"></span>
+            <table id="table" class="table table-bordered table-responsive-md  text-center">
+                <thead class="table-info">
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Company Code</th>
+                        <th>Company Type</th>
+                        <th>Established date</th>
+                        <th>Country</th>
+                        <th>Currency</th>
+                        <th>Conso Rate</th>
+                        <th>Start Date</th>
+                        <th>End date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                {% for r in data %}
+                <tbody>
+                    <tr>
+                        <td>{{ r.company_name }} </td>
+                        <td>{{ r.company_code }} </td>
+                        <td>{{ r.company_type }}</td>
+                        <td>{{ r.company_est_date|date:'j M Y'  }}</td>
+                        <td>{{ r.country }}</td>
+                        <td>{{ r.currency }}</td>
+                        <td>{{ r.consolidation_rate|floatformat:2 }} % </td>
+                        <td>{{ r.company_start_date|date:'j M Y' }}</td>
+                        <!-- Format j F Y = 1 January 2019 -->
+                        <td>{{ r.company_end_date|date:'j M Y' }}</td>
+                        <td>
+                            <a href="{% url 'CompanyUpdate' id=r.id %}" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="javascript:del('{% url 'CompanyDelete' id=r.id %}')" class="btn btn-danger btn-sm">Delete</a>
+                            <script>
+                                function del(url) {
+                                    if (confirm('Are you sure you want to delete?')) {
+                                        document.location = url;
+                                    }
+                                }
+                            </script>
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+{% endblock %}

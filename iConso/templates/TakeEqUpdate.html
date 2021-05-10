@@ -1,0 +1,130 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Edit Take equity transaction </h5>
+<br>
+{% endblock %}
+
+{% block style %}
+    <style type="text/css">
+        form ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        input {
+            border: none;
+        }
+        .add-row {
+            padding-left:18px;
+        }
+        .delete-row {
+            float:right;
+            display:block;
+            margin-left:4px;
+            padding-left:18px;
+        }
+        .dynamic-event-form th {
+            text-align:right;
+            font-weight:bold;
+        }
+        .dynamic-event-form td span img {
+            vertical-align:middle;
+            border:0;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+{% if messages %}
+    {% for message in messages %}
+  <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+      {{ message }}
+  </div>
+    {% endfor %}
+{% endif %} 
+
+ <head>
+  <div class="card bg-white mb-3">
+    <div class="card-body shadow ">
+      <div class="col-auto">
+      <div class="container">
+        <div class="form-row">
+          <div class="form-group col-md-6 mb-0">
+            <b>Period Code : </b>  {{ my_journal.period_code }}
+          </div>
+          <div class="form-group col-md-6 mb-0">
+            <b>Journal Number : </b>  {{ my_journal.journal_no }}
+          </div>
+      </div>
+        <div class="form-row">
+          <div class="form-group col-md-6 mb-0">
+            <b>Company Code : </b>  {{ my_journal.company_code }}
+          </div>
+          <div class="form-group col-md-6 mb-0">
+            <b>Parent company Code : </b>  {{ my_journal.Parent_company_code }}
+          </div>
+      </div>
+
+      <div class="form-row">
+          <div class="form-group col-md-12 mb-0">
+            <b>Journal description : </b>  {{ my_journal.journal_description}}
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</head>
+ <div class="entry">
+
+
+  <!--ตาราง-->
+  <form method="post" action="" class="m-auto" >
+  {% csrf_token %}
+  <div class="table table-sm table-editable">
+    <span class="table-add float-right mb-3 mr-2 "></span>
+    <table id="header" class="table table-bordered table-responsive-md  text-center " >
+      <thead class="table-info">
+        <tr>
+          <th class="text-center">Account Code</th>
+          <th class="text-center">Account Name</th>
+          <th class="text-center">Intercompany Code</th>
+          <th class="text-center">Debit</th>
+          <th class="text-center">Credit</th>
+        </tr>
+      </thead>
+      {{ formset.management_form }}
+		  {% for r in formset %}
+        {% for hidden in r.hidden_fields %}
+          {{ hidden }}
+        {% endfor %}
+      <tbody>
+        <tr class="border-0" >
+            <td>{{ r.account_code }} </td>
+            <td>{{ r.account_name }} </td>
+            <td>{{ r.rpt_interco_code }} </td>
+            <td>{{ r.debit }}</td>
+            <td>{{ r.credit }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+  </div>
+  </table>
+</form>
+<p>
+  {{ form.management_form }}
+  {{ formset.management_form }}
+  <div class="mt-4 text-center">
+    <button class="btn btn-info" >Submit</button>
+    <a href="{% url 'TakeEqSummary' %}" class="btn btn-secondary">Cancel</a>
+  </div>
+</p>
+
+<script type="text/javascript">
+  $(function() {
+      $('#myForm tbody tr').formset();
+  })
+</script>
+{% endblock %}

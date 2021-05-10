@@ -1,0 +1,95 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Chart of Accounts</h5>
+{% endblock %}
+
+{% block content %}  
+<style>
+  td {font-size: 14px;}
+  thead > tr > th {font-size: 14px;}
+  /* style ของ column */
+  tbody>tr>:nth-child(3){text-align:left;}
+  tbody>tr>:nth-child(5){text-align:left;}
+  tbody>tr>:nth-child(7){text-align:left;}
+
+</style>  
+  <body>
+  </div>
+    <div class="card-body">
+    <!--ปุ่มกด-->
+      <div class="btn-group ">
+        <a href="{% url 'CoaMasterCreate' %}" class="btn btn-info btn-sm" role="button">Add New COA</a>
+        &nbsp;&nbsp;
+        <div class="dropdown ">
+          <button type="dropdown" class="btn btn-secondary btn-sm dropdown dropdown-toggle "
+            data-toggle="dropdown" > Search
+          </button>
+            <div class="dropdown-menu">
+              <div class="form-group">
+                <form class="px-4 py-3" method="get">
+                  {{CoaFilter.form.as_p}}
+                  <p class="mt-4 text-center">
+                      <button type="submit" class="btn btn-info btn-sm ">Search</button>
+                      <a href="{% url 'CoaMasterSummary' %}" class="btn btn-secondary  btn-sm">Cancel</a>
+                  </p>
+                </form>
+              </div>
+            </div>
+        </div>
+      </div>
+    <!--ตาราง-->
+    <div id="table" class="table table-sm  ">
+      <span class="table-add float-right mb-3 mr-2"></span>
+      <table class="table table-bordered table-responsive-md  text-center" style="empty-cells:hide;">
+        <thead class="table-info">
+          <tr>
+            <th class="text-center">Company Code</th>
+            <th class="text-center">Account Code</th>
+            <th class="text-center">Account Name</th>
+            <th class="text-center">Working Group Row</th>
+            <th class="text-center">Working Group Name</th>
+            <th class="text-center">FS Group Row</th>
+            <th class="text-center">FS Group Name</th>
+            <th class="text-center">Account Type</th>
+            <!-- <th class="text-center">Date Create</th> -->
+            <!-- <th class="text-center">Update Date</th> -->
+            <th></th>
+          </tr>
+        </thead>
+        {% for r in Coadata %}
+        <tbody>
+          <tr>
+            <td>{{ r.company_code }} </td>
+            <td>{{ r.account_code }} </td>
+            <td>{{ r.account_name }}</td>
+
+            <!-- ชื่อฟิลล์ใน Coa.ชื่อฟิลล์ที่๋Join มา Company -->
+            <td>{{ r.fs_group.wk_group_row }}</td>
+            <td>{{ r.fs_group.wk_group_name }}</td>
+            <td>{{ r.fs_group.fs_group_row }}</td>
+            <td>{{ r.fs_group.fs_group_name }}</td>
+            <td>{{ r.fs_group.account_type }}</td> 
+            <!-- <td>{{ r.account_date_create |date:'j M Y'}} </td> -->
+            <!-- <td>{{ r.account_date_update |date:'j M Y'}} </td> -->
+            <td>
+                <a href="{% url 'CoaMasterUpdate' id=r.id %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="javascript:del('{% url 'CoaMasterDelete' id=r.id %}')" class="btn btn-danger btn-sm">Delete</a>
+                <script>
+                    function del(url) {
+                        if (confirm('Are you sure you want to delete?')) {
+                            document.location = url;
+                        }
+                    }
+                </script>
+            </td>
+        </tr>
+      </tbody>
+        {% endfor %}
+    </table>
+    </div>
+  </div>
+  </body>
+{% endblock %}
+

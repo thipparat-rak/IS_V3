@@ -1,0 +1,125 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+{% block header %}
+
+
+<h5 class="d-block p-3 bg-dark text-white">Add reclassify journal</h5>
+<br>
+{% endblock %}
+{% block content %}
+
+<!--ปุ่มกด-->
+<div class="card-body">
+  <input type="add" value="Add Journal" class="btn btn-info btn-sm">
+  <input type="edit" value="Edit" class="btn btn-info btn-sm">
+  <input type="submit" value="Save" class="btn btn-info btn-sm">
+
+
+  <form method="post" class="m-auto" >
+
+  <!--ตาราง Header-->
+    {% csrf_token %}
+    <div class="container">
+    <div class="form-row">
+        <div class="form-group col-md-3 mb-0">
+            {{ ReclassHeaderForm.period_code|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-9 mb-0">
+            {{ ReclassHeaderForm.Parent_company_code|as_crispy_field }}
+
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 mb-0">
+            {{ ReclassHeaderForm.journal_description|as_crispy_field }}
+        </div>
+    </div>
+    <p class="mt-4 text-center">
+        <button class="btn btn-info">Submit</button>
+        <a href="{% url 'ReclassSummary' %}" class="btn btn-secondary">Cancel</a>
+    </p>
+</form>
+{{ formset.management_form|crispy }}
+
+    {% for form in formset.forms %}
+            <tr class="{% cycle 'row1' 'row2' %} formset_row-{{ formset.prefix }}">
+                {% for field in form.visible_fields %}
+                <td>
+                    {# Include the hidden fields in the form #}
+                    {% if forloop.first %}
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                    {% endif %}
+                    {{ field.errors.as_ul }}
+                    {{ field|as_crispy_field }}
+                </td>
+                {% endfor %}
+            </tr>
+    {% endfor %}
+
+</table>
+
+
+
+  <!--ตาราง-->
+  <div  class="table table-sm table-editable ">
+    <span class="table-add float-right mb-3 mr-2"></span>
+    <table id="table" class="table table-bordered table-responsive-md  text-center">
+      <thead class="table-info">
+        <tr>
+          <th class="text-center">No.</th>
+          <th class="text-center">Company Code</th>
+          <th class="text-center">Account Code</th>
+          <th class="text-center">Account Name</th>
+          <th class="text-center">Debit</th>
+          <th class="text-center">Credit</th>
+          <th class="text-center">Remove</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td class="pt-3-half" contenteditable="true"> </td>
+          <td class="pt-3-half" contenteditable="true"> </td>
+          <td class="pt-3-half" contenteditable="true"> </td>
+          <td class="pt-3-half" contenteditable="true"> </td>
+          <td class="pt-3-half" contenteditable="true"> </td>
+          <td class="pt-3-half" contenteditable="true"> </td>
+          <td>
+            <span id="addrow" class="add"><button onclick="add_row();" type="button"
+              class="btn btn-info btn-rounded btn-sm my-0">Add</button></span>
+            <span id="delete" class="delete"><button type="button"
+                class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+          </td>
+        </tr>
+        
+        </tr>
+      </tbody>
+        <!-- Sum line -->
+        <tfoot class = "table-secondary">
+        <tr>
+          <th> </th>
+          <th></th>
+          <th></th>
+          <th>Total </th>
+          <th> </th>
+          <th> </th>
+          <th> </th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<script>
+    
+  $(document).ready(function () {
+  var counter = 0;
+  $('table').on('click','.delete',function(){
+      $(this).parents('tr').remove();
+      });
+  });
+</script>
+</body>
+
+{% endblock %}

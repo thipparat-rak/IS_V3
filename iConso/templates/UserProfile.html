@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<h5 class="d-block p-3 bg-dark text-white">Profile</h5>
+{% endblock %}
+{% block content %}
+<style>
+    form {
+        max-width: 450px;
+        margin: auto;
+    }
+  </style>
+
+    <div class="card-body">
+            <div class="card border-left-info shadow h-100 py-2">
+            <div class="col-auto">
+                
+                <p class="lead text-info text-xl-left"> User name :  {{ user.username }} </p>
+                <p> First Name : {{ user.first_name }} </p>
+                <p> Last Name : {{ user.last_name }} </p>
+                {% for r in company_list %}
+                <p> Company Name: {{ r.company_name }} </p>
+                {% endfor %}
+                <!-- <p> Company Code : {{ request.user.company_code }} </p> -->
+                <p> Group : {{ user.groups.all.0.name }} </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
