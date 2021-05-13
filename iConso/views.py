@@ -538,6 +538,7 @@ def ImportFsGrouping(request):
 def ImportTB(request):
     TBsummary = Trial_balance.objects.annotate(date_create=TruncMinute('tb_date_create')).values('company_code','period_code','date_create','tb_file_name').annotate(Sum('tb_amount')).order_by('-date_create')
     CurrentPeriod = Periods.objects.all().filter(period_status = 'Open')
+    CurrentPeriod2 = Periods.objects.all().get(period_status = 'Open')
     print(CurrentPeriod)
     if request.method == "POST":
         form = UploadTBForm(request.POST, request.FILES)
@@ -562,6 +563,11 @@ def ImportTB(request):
                 messages.warning(request ,'Invalid File Format!')
                 return redirect(reverse('ImportTB'))
             df.columns=['company_code','period_code','account_code','account_name','tb_amount']
+            ## code check period
+            period = df.iloc[0]['period_code']
+            if (str(period) != str(CurrentPeriod2)):
+                messages.warning(request,'Period is not open!')
+                return redirect(reverse('ImportTB'))
             #Condition check sum
             check_sum = 0  #กำหนดค่าเริ่มต้นเท่ากัน 0
             for index, row in df.iterrows():        
@@ -616,6 +622,7 @@ def TBDelete(request, id):
 @login_required(login_url='Login')
 def ImportRPT(request):
     RPTfileSummary = Interco_transactions.objects.annotate(date_create=TruncMinute('rpt_date_create')).values('company_code','period_code','date_create','rpt_file_name').annotate(Sum('rpt_amount')).order_by('-date_create')
+    CurrentPeriod2 = Periods.objects.all().get(period_status = 'Open')
     if request.method == "POST":
         form = UploadRPTForm(request.POST, request.FILES)
         if form.is_valid():
@@ -645,6 +652,13 @@ def ImportRPT(request):
                 return redirect(reverse('ImportRPT'))
 
             df.columns=['company_code','period_code','rpt_interco_code','account_code','account_name','rpt_amount']
+            ## code check period
+            period = df.iloc[0]['period_code']
+            print(period)
+            print(CurrentPeriod2)
+            if (str(period) != str(CurrentPeriod2)):
+                messages.warning(request,'Period is not open!')
+                return redirect(reverse('ImportRPT'))
             #Condition
             # for index, row in df.iterrows(): 
             #     # print (row["account_code"])
@@ -1874,7 +1888,6 @@ def UserReport(request):
 def AdminLogReport(request):
     if request.method == "POST":
         form = AdminLogForm(request.POST)
-        username = request.POST['UsernameFilter']
         date = request.POST['DateFilter']
         if form.is_valid():
             pd.options.display.float_format = "{:,.2f}".format
@@ -1891,8 +1904,11 @@ def AdminLogReport(request):
             result2['action_date'] = result2['action_date'].dt.strftime('%Y-%m-%d')
             result2['action_time'] = result2['action_time'].dt.strftime('%H:%M:%S')
 
-            if len(request.POST['UsernameFilter'])>1  or len(request.POST['DateFilter'])>1  :
-                result2.query(('username == @username  | action_date == @date') , inplace = True)
+            # if len(request.POST['UsernameFilter'])>1  or len(request.POST['DateFilter'])>1  :
+            #     result2.query(('username == @username  | action_date == @date') , inplace = True)
+            
+            if len(request.POST['DateFilter'])>1  :
+                result2.query(('action_date == @date') , inplace = True)
             
             Colname = {'content_type_id':'Content type id','app_label':'App label','model':'Model','object_id':'Object id','object_repr':'Object repr','action_flag':'Action flag',
                 'change_message':'Change message','user_id':'User id','username':'Username', 'first_name':'First name','last_name':'Last name','action_date':'Action date','action_time':'Action time'}
